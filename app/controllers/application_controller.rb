@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user_subscribed?
 
   def after_sign_up_path_for(resource)
-    if params[:plan] == "free" or ""
+    if params[:plan] == "free" or params[:plan] == ""
       root_path # as defined in config/routes.rb
     elsif params[:plan] == "monthly"
       new_subscription_path
