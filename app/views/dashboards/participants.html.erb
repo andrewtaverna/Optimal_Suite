@@ -1,0 +1,74 @@
+<div class="page-title">
+              <div class="title_left" style="width:100%;">
+                <h3>Participant List</h3>
+              </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+
+
+<div id="results-participants">
+				<div class="table-responsive-vertical shadow-z-1 col-md-12" style="padding:0px;">
+						  <!-- Table starts here -->
+						  <table id="table" class="table table-hover table-mc-light-blue" style="margin:0px;">
+						      <thead>
+						        <tr>
+						        <th>Partcipant email</th>
+								<th>Success Percentage</th>
+								<th>Time Spent</th>
+								<th>Tasks Completed</th>
+						        </tr>
+						      </thead>
+						      <tbody>
+
+							<% @participants.each do |participant| %>
+
+								<% if @results.where(participantid:participant.id).length > 0 %>
+									<tr>
+										<td><%= participant.email %></td>
+										
+										<% @correct = 0 %>
+										<% @wrong = 0 %>
+										
+										<%	@dashboard.questions.map do |question| %>
+												<% @results.where(participantid: participant.id).each do |result| %>
+
+													<% if question.id == result.questionid %>
+														
+														<% @checkBefore = @correct %>
+														<% question.answers.map do |answer| %>
+															<% if answer.text == result.correct_node %>
+																<% @correct = @correct + 1 %>
+															<% end %>
+														<% end %>
+														<% if @checkBefore == @correct %>
+															<% @wrong = @wrong + 1 %>
+														<% end %>
+													<% end %>
+												<% end %>
+											<% end %>
+											
+										<% @total = @correct.to_f / (@correct + @wrong) %>
+										
+
+
+										<td><%= @total * 100 %>%</td>
+										<% @timeSpentMax = 0.0 %>
+										<% @results.where(participantid:participant.id).map do |result| %>
+											<% if @timeSpentMax < result.timespent %>
+												<% @timeSpentMax = result.timespent %>
+											<% end %>
+
+										<% end %>
+										<td><%= @timeSpentMax %> seconds</td>
+										<td><%= @results.where(participantid:participant.id).length %> / <%= @dashboard.questions.length %></td>
+
+
+									</tr>
+								<% end %>
+							<% end %>
+						</tbody>
+					</table>
+				</div>
+			</div>

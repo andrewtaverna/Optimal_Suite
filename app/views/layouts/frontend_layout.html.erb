@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html id="please">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= content_for?(:title) ? yield(:title) : "Optimal Suite" %></title>
+    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Optimal Suite Tools" %>">
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+
+        <!-- stylesheets -->
+    <link rel="stylesheet" type="text/css" href="/reacttheme/compiled/theme.css">
+    <link rel="stylesheet" type="text/css" href="/reacttheme/vendor/animate.css">
+    <style>
+      html {
+        height:100% !important;
+        margin: 0;
+      }
+    </style>
+
+    <%= favicon_link_tag 'favicon.ico' %>
+    <%= render 'layouts/google_analytics' %>
+
+
+    <%= javascript_include_tag 'application' %>
+    <%= csrf_meta_tags %>
+    <%= yield(:head) %>
+  </head>
+
+    
+     <%= render 'layouts/navigation' %>
+     <%= yield %>
+
+
+</html>

@@ -1,0 +1,44 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+      <title><%= content_for?(:title) ? yield(:title) : "Optimal Suite" %></title>
+
+        <!-- ========== META TAGS ========== -->
+        <meta name="description" content="User Experience Testing Tools for Information Architecture.">
+
+        <!-- ========== FAVICON & APPLE ICONS ========== -->
+        <%= favicon_link_tag 'favicon.ico' %>
+
+        <!-- ========== MINIFIED VENDOR CSS ========== -->
+        <link rel="stylesheet" href="/frontend/styles/vendor.css">
+        <link rel="stylesheet" href="/frontend/styles/main.css">
+
+        <!-- ========== MODERNIZR ========== -->
+      <script src="/frontend/scripts/vendor/modernizr.js"></script>
+
+
+      <%= favicon_link_tag 'favicon.ico' %>
+      <%= render 'layouts/google_analytics' %>
+
+
+      <%= javascript_include_tag 'application' %>
+      <%= csrf_meta_tags %>
+      <%= yield(:head) %>
+
+    </head>
+
+     <%= yield %>
+
+      <script src="/frontend/scripts/vendor.js"></script>
+
+        <!-- ========== MINIFIED PLUGINS JS ========== -->
+      <script src="/frontend/scripts/plugins.js"></script>
+
+      <script src="/frontend/scripts/main.js"></script>
+    </body>
+
+</html>

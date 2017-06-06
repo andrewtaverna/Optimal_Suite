@@ -1,0 +1,229 @@
+<% content_for :title do %>Results - <%= @dashboard.title %><% end %>
+<%= javascript_include_tag "//www.google.com/jsapi" %> 
+<%= javascript_include_tag "application", "chartkick" %>
+
+
+
+          <div class="">
+            <div class="page-title">
+              <div class="title_left" style="width:100%;">
+                <h3>Results - Task-by-Task</h3>
+              </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2><%= @dashboard.title %></h2>
+
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+						<style>
+							p {
+								font-size: 16px;
+							}
+						</style>
+						
+				<div class="row"> 
+
+					
+					<% @i = 0 %>
+
+					<select id="selectMe" onchange="resizeThis()">
+					<% for i in 0..@dashboard.questions.length-1 %>
+						<option value="option<%= i + 1 %>">Task <%= i + 1 %></option>
+					<% end %>
+					</select>
+
+
+					<br>
+					<br>
+
+					<% @i = 0 %>
+
+					<% @dashboard.questions.each do |question| %>
+
+
+						<% @i = @i + 1 %>
+
+						<div id="option<%= @i %>" class="group">
+
+						<h3><%= question.text %></h3>
+		
+							<div class="col-md-8">
+								<%= pie_chart(@results.where(questionid: question.id).group(:correct_node).count, width: "700px", height: "450px", library: { is3D: "true", title: "Final Node Distribution", chartArea: {width: "100%", height: "100%"} } ) %>
+							</div>
+
+							<div class="col-md-4">
+								<%= pie_chart({"Correct" => @correctPerQuestion[@i -1], "Wrong" => @wrongPerQuestion[@i -1] }, width: "400px", height: "230px" , library: { title: "Success Distribution", chartArea: {width: "100%", height: "100%"} }) %>
+								<div style="margin-top: 10px;">
+								<%= pie_chart(@results.where(questionid: question.id).group(:firstclick).count, width: "400px", height: "230px" , library: { title: "First Click Distribution", chartArea: {width: "100%", height: "100%"} }) %>
+								</div>
+							</div>
+							
+
+<br><br><br>
+
+
+
+					
+						<div class="table-responsive-vertical shadow-z-1 col-md-12" style="padding:0px; margin-top: 20px;">
+						  <!-- Table starts here -->
+						  <table id="table" class="table table-hover table-mc-light-blue" style="margin:0px;">
+						      <thead>
+						        <tr>
+						          <th>Partcipant email</th>
+								  <th>Path Taken</th>
+							      <th>Correct/Wrong</th>
+						        </tr>
+						      </thead>
+						      <tbody>
+
+									<% @participants.each do |participant| %>
+
+													
+											<% @results.where(participantid: participant.id).map do |result| %>
+
+
+												<% if result.path != nil %>
+
+
+														<% if question.id == result.questionid %>
+															<tr>
+																<td data-title="Email"><%= participant.email %></td>
+																<td data-title="Path"><%= result.path %></td>
+															
+															<% question.answers.each do |answer| %>	
+																<% if result.correct_node == answer.text %>
+																	<td data-title="Status">Correct</td>
+																<% else %>
+																	<td>Wrong</td>
+																<% end %>
+
+															<% end %>
+
+														<% end %>
+													<% end %>
+												</tr>
+											
+											<% end %>
+									<% end %>
+						      </tbody>
+						    </table>
+						  </div>
+
+						
+						</div>
+
+
+					<% end %>
+
+
+				</div>
+				<div class="clearfix"></div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+<script>
+	/**
+ * Created by Kupletsky Sergey on 05.11.14.
+ *
+ * Material Design Responsive Table
+ * Tested on Win8.1 with browsers: Chrome 37, Firefox 32, Opera 25, IE 11, Safari 5.1.7
+ * You can use this table in Bootstrap (v3) projects. Material Design Responsive Table CSS-style will override basic bootstrap style.
+ * JS used only for table constructor: you don't need it in your project
+ */
+
+$(document).ready(function() {
+
+    var table = $('#table');
+
+    // Table bordered
+    $('#table-bordered').change(function() {
+        var value = $( this ).val();
+        table.removeClass('table-bordered').addClass(value);
+    });
+
+    // Table striped
+    $('#table-striped').change(function() {
+        var value = $( this ).val();
+        table.removeClass('table-striped').addClass(value);
+    });
+  
+    // Table hover
+    $('#table-hover').change(function() {
+        var value = $( this ).val();
+        table.removeClass('table-hover').addClass(value);
+    });
+
+    // Table color
+    $('#table-color').change(function() {
+        var value = $(this).val();
+        table.removeClass(/^table-mc-/).addClass(value);
+    });
+});
+
+// jQuery’s hasClass and removeClass on steroids
+// by Nikita Vasilyev
+// https://github.com/NV/jquery-regexp-classes
+(function(removeClass) {
+
+	jQuery.fn.removeClass = function( value ) {
+		if ( value && typeof value.test === "function" ) {
+			for ( var i = 0, l = this.length; i < l; i++ ) {
+				var elem = this[i];
+				if ( elem.nodeType === 1 && elem.className ) {
+					var classNames = elem.className.split( /\s+/ );
+
+					for ( var n = classNames.length; n--; ) {
+						if ( value.test(classNames[n]) ) {
+							classNames.splice(n, 1);
+						}
+					}
+					elem.className = jQuery.trim( classNames.join(" ") );
+				}
+			}
+		} else {
+			removeClass.call(this, value);
+		}
+		return this;
+	}
+
+})(jQuery.fn.removeClass);
+
+
+	function resizeThis() {
+		var ev = document.createEvent('Event');
+    ev.initEvent('resize', true, true);
+    window.dispatchEvent(ev);
+	}
+
+
+	$(document).on('change', 'select', function() {
+	    var ev = document.createEvent('Event');
+	    ev.initEvent('resize', true, true);
+	    window.dispatchEvent(ev);
+	});
+
+
+$(document).ready(function () {
+  $('.group').hide();
+  $('#option1').show();
+  $('#selectMe').change(function () {
+    $('.group').hide();
+    $('#'+$(this).val()).show();
+  })
+});
+</script>

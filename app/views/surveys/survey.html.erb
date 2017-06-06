@@ -1,0 +1,481 @@
+<% content_for :title do %>Survey - Optimal Suite<% end %>
+<!DOCTYPE html>
+<html id="please">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= content_for?(:title) ? yield(:title) : "Optimal Suite Tools" %></title>
+    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Optimal Suite Tools" %>">
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+
+        <!-- stylesheets -->
+    <link rel="stylesheet" type="text/css" href="/reacttheme/compiled/theme.css">
+    <link rel="stylesheet" type="text/css" href="/reacttheme/vendor/animate.css">
+    <style>
+      html {
+        height:100% !important;
+        margin: 0;
+      }
+    </style>
+
+    <%= favicon_link_tag 'favicon.ico' %>
+    <%= javascript_include_tag 'application' %>
+    <%= csrf_meta_tags %>
+  </head>
+
+
+
+
+
+    
+<script src="/assets/javascript/jquery.steps.js"></script>
+
+
+<script>
+    $(function ()
+    {
+        $("#wizard").steps({
+            headerTag: "h2",
+            bodyTag: "section",
+            transitionEffect: "slideLeft"
+        });
+    });
+
+
+    window.onload = function() {
+
+      // Initialize the plugin
+      $('#collectEmail').popup({
+      	  backgroundactive: true,
+		  color: 'white',
+		  opacity: 1,
+		  transition: '0.3s',
+		  scrolllock: true
+		});
+
+		$('#collectEmail').popup('show');
+
+
+
+	};
+
+
+</script>
+
+<div class="" id="">
+
+<div class="row">
+    <div class="col-md-12">
+  <!-- Add content to the popup -->
+  <div id="collectEmail">
+
+    <h2>Welcome to Optimal Suite's TreeTool.</h2>
+    <p>Please put your email address in the following text field in order to complete the survey.</p>
+	
+
+
+    <%= form_tag(participants_path, :remote => true, :format => :js) do %>
+      <%= hidden_field_tag :dashboardid, @dashboard.id %>
+      <%= text_field_tag :email, params[:email], class: "form-control input-lg text-center" %>
+      <div class="text-center" style="margin-top:15px;">
+        <%= submit_tag "Submit", onclick: "$('#collectEmail').popup('hide'); $('#jstree_demo').jstree('close_all'); $('#jstree_demo').jstree('deselect_all');", class: "btn btn-primary center" %>
+      </div>
+    <% end %>
+
+    <p id='result'></p>
+
+
+  </div>
+</div>
+</div>
+<style>
+    .current {
+        text-align: center !important;
+        position:initial;
+    }
+
+    .wizard > .steps .current a {
+        color:white !important;
+    }
+    .wizard > .actions {
+text-align: center !important;
+margin-top: 40px;
+font-weight: 500;
+}
+
+    @media (max-width: 768px) {
+    .wizard > .actions {
+        margin-top: 75px;
+    }
+}
+
+    .wizard > .steps > ul > li {
+        margin-top:0px;
+
+    }
+
+    .wizard > .steps .current a { 
+padding-top:20px;
+padding-bottom: 20px;
+
+background-color:
+rgb(34, 55, 65)
+
+;
+border-top-width:
+0px
+;
+box-shadow:
+rgba(46, 46, 46, 0.298039) 0px 1px 3px 1px, rgba(255, 255, 255, 0.2) 0px 1px 1px 0px inset
+;
+box-sizing:
+border-box
+;
+color:
+rgb(51, 51, 51)
+;
+display:
+block
+;
+border-radius: 0;
+min-height:
+70px
+;
+z-index:
+9999
+; }
+
+.content {
+    margin: 0;
+}
+.wizard > .actions {
+    margin-top:0;
+}
+
+</style>
+
+        <div class="content">
+
+
+            <div id="wizard">
+            <% @i = 0 %>
+            <% @dashboard.questions.each do |question| %>
+                <style>
+                    #wizard-t-<%= 1 * @i %> {
+                        margin-top: <%= -20 * @i %>px;
+                    }
+                </style>
+                <% @i = @i + 1 %>
+
+                <h2 text-align="center" class="container">Task <%= @i %> of <%= @dashboard.questions.length %>: <%= question.text %></h2>
+                <section>
+
+
+                </section>
+
+
+            <%end%>
+            </div>
+
+<!-- styling for the tree on this page -->
+<style>
+    .jstree li > a > .jstree-icon {  display:none !important;} 
+    i .jstree-proton > .jstree-no-dots .jstree-open > .jstree-ocl { background-image: none !important; }
+    .jstree-proton .jstree-node, .jstree-proton .jstree-icon { }
+
+
+    .jstree-proton .jstree-icon:empty {
+
+        margin-top: 3px !important;
+        margin-left:3px !important;
+    }
+
+
+    .jstree-node {
+        margin-top: 11px;
+    }
+
+    .jstree-wholerow {
+        background-image: linear-gradient(rgb(232,232,232) 0%, rgb(232,232,232) 100%) !important;
+        height: 30px !important;
+        border-radius: 5px !important;
+        
+    }
+
+
+    .jstree-anchor {
+            font-size: 25px !important;
+        font-weight: 500 !important;
+        color: #2a2a2a !important;
+
+        padding-top: 2px !important;
+        padding-left: 10px !important;
+    }
+
+    .jstree-proton .jstree-wholerow-clicked {
+        background: #bdbdbd !important;
+        background: -moz-linear-gradient(top, #3392e3 0%, #3392e3 100%);
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #3392e3), color-stop(100%, #3392e3));
+        background: -webkit-linear-gradient(top, #3392e3 0%, #3392e3 100%);
+        background: -o-linear-gradient(top, #3392e3 0%, #3392e3 100%);
+        background: -ms-linear-gradient(top, #3392e3 0%, #3392e3 100%);
+        background: linear-gradient(to bottom, #3392e3 0%, #3392e3 100%);
+    }
+
+    #jstree_demo {
+        margin-top: -25px !important;
+    }
+
+    @media (max-width: 768px) {
+        .jstree-proton-responsive .jstree-wholerow-ul .jstree-wholerow {
+            height: 40px !important;
+        }
+
+        .jstree-anchor {
+            margin-top: -3px;
+        }
+    }
+
+</style>
+
+            <div class="row">
+            <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div id="jstree_demo" class="demo" style="margin-top:1em; min-height:200px;">
+                    </div>
+                    
+                    <br>
+                </div>
+            </div>  
+
+
+        </div>
+
+</div>
+
+
+<script>
+
+var tempQuestionId = <%= @firstQuestionId %>;
+
+function demo_correct() {
+	var ref = $('#jstree_demo').jstree(true),
+		sel = ref.get_selected();
+	if(!sel.length) { return false; }
+	sel = sel[0];
+
+	var correct_node = $('#jstree_demo').jstree(true).get_node(sel)
+
+	var tempDashId = "" + <%= @dashboard.id %>;
+	var timeSpentOnPage = TimeMe.getTimeOnCurrentPageInSeconds();
+    <% if Participant.last != nil %>
+    currentParticipant = <%= Participant.last.id + 1 %>;
+    <% else %>
+    currentParticipant = 1;
+    <% end %>
+
+    window["path_"+ tempQuestionId] = (window["path_"+ tempQuestionId]).slice(0,-3);
+    console.log(window["path_"+ tempQuestionId])
+
+    var splitPath = window["path_"+ tempQuestionId].split(" > ");
+    console.log(splitPath)
+    window["firstClick_" + tempQuestionId] = splitPath[1];
+
+
+	var editted = {
+		'correct_node': correct_node.text,
+		'dashboardid': tempDashId,
+		'questionid': tempQuestionId,
+		'timespent': timeSpentOnPage,
+		'participantid': currentParticipant,
+        'path': window["path_"+ tempQuestionId],
+        'firstclick': window["firstClick_"+ tempQuestionId]
+	}
+
+	tempQuestionId = tempQuestionId + 1;
+
+	moreedit = JSON.stringify(editted)
+
+	console.log(editted)
+	console.log(moreedit)
+
+	console.log(timeSpentOnPage)
+
+	$.ajax({
+	  url:/results/,
+	  type:"POST",
+	  data: moreedit,
+	  contentType:"application/json; charset=utf-8",
+	  dataType:"json",
+	})
+
+	$('#jstree_demo').jstree('close_all');
+    $('#jstree_demo').jstree('deselect_all');
+
+};
+
+    TimeMe.setIdleDurationInSeconds(30);
+    TimeMe.setCurrentPageName("my-home-page");
+    TimeMe.initialize();        
+
+// Not exactly beautiful 
+
+$("#postChange").click(function(){
+
+})
+
+
+
+var consolecheck = []
+
+
+var count = [];
+
+function get_tree(){
+	var v = $('#jstree_demo').jstree(true).get_json('#', {flat:true});
+	var i =0;
+
+	var assign_length = v.length;
+	var max = 0;
+
+	for (var i=0; i < assign_length; i++) {
+		if (parseInt(v[i].id) >= max) {
+			max = v[i].id
+		}		
+	}
+	max++;
+	count = max;
+}
+
+
+function get_selected() {
+	var ref = $('#jstree_demo').jstree(true);
+	//actual node being deleted
+	sel = ref.get_selected();
+	if(!sel.length) { return false; }
+	return sel;
+}
+
+
+$(function () {
+	var to = false;
+	$('#demo_q').keyup(function () {
+		if(to) { clearTimeout(to); }
+		to = setTimeout(function () {
+			var v = $('#demo_q').val();
+			$('#jstree_demo').jstree(true).search(v);
+		}, 250);
+	});
+	
+
+	$('#jstree_demo').jstree({
+			"core" : {
+				"animation" : 0,
+				"check_callback" : true,
+		        'themes': {
+		            'name': 'proton',
+		            'responsive': true
+		        },
+			    'data' : {
+			      "url" : "/jsons/u/" + "<%= @dashboard.id %>",
+			      "success": function(data){
+                     series = data;
+            },
+			      "dataType" : "json" // needed only if you do not supply JSON headers
+			    }
+			},
+
+			"plugins" : [ "search", "state", "types", "wholerow" ]
+		});
+});
+
+
+$("#jstree_demo").bind("open_node.jstree", function (event, data) { 
+  var obj =  data.instance.get_node(data.node, true);
+  if(obj) {
+     obj.siblings('.jstree-open').each(function () { data.instance.close_all(this, 0); }); 
+  }
+});
+
+
+
+
+
+// Csrf token stuff
+$(function() {
+
+    // This function gets cookie with a given name
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+
+    /*
+    The functions below will create a header with csrftoken
+    */
+
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    function sameOrigin(url) {
+        // test that a given url is a same-origin URL
+        // url could be relative or scheme relative or absolute
+        var host = document.location.host; // host + port
+        var protocol = document.location.protocol;
+        var sr_origin = '//' + host;
+        var origin = protocol + sr_origin;
+        // Allow absolute or scheme relative URLs to same origin
+        return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+            (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+            // or any other URL that isn't scheme relative or absolute i.e relative.
+            !(/^(\/\/|http:|https:).*/.test(url));
+    }
+
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
+                // Send the token to same-origin, relative URLs only.
+                // Send the token only if the method warrants CSRF protection
+                // Using the CSRFToken value acquired earlier
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+
+});
+
+// Instantiate strings for sending path
+<% @dashboard.questions.each do |question| %>
+var path_<%= question.id %> = "";
+<% end %>
+var initial = 0;
+
+$("#jstree_demo").bind("select_node.jstree", function (e, data) {
+
+    if(initial == 1) {
+        window["path_"+ tempQuestionId] = window["path_"+tempQuestionId] + data.node.text + " > "
+        console.log(window["path_"+ tempQuestionId])
+        return data.instance.toggle_node(data.node);
+    }
+
+
+    $('#jstree_demo').jstree('close_all');
+    initial = 1;
+
+});
+</script>
+
+
+</html>

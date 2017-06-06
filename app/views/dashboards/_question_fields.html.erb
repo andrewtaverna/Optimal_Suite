@@ -1,0 +1,28 @@
+
+              <div class="col-md-6">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2><%= f.label :text, "Task" %></h2>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <br />
+                    <fieldset>
+                      <%= f.text_area :text, class: 'form-control' %><br />
+
+                      <% unless @results.length > 0 %>
+                      <%= f.check_box :_destroy %>
+                      <%= f.label :_destroy, "Remove Task" %>
+                      <% end %>
+
+                      <%= f.fields_for :answers do |builder| %>
+                        <%= render 'answer_fields', f: builder %>
+                      <% end %>
+
+                      <% unless @results.length > 0 %>
+                      <%= link_to_add_fields "Add Answer", f, :answers %>
+                      <% end %>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>

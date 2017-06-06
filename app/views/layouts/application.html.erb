@@ -1,0 +1,176 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <!-- ========== VIEWPORT META ========== -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+        <!-- ========== PAGE TITLE ========== -->
+        <title><%= content_for?(:title) ? yield(:title) : "User Experience Testing" %></title>
+
+        <!-- ========== META TAGS ========== -->
+        <meta name="description" content="User Experience Testing Tools for Information Architecture.">
+        <meta name="keywords" content="tree testing, ux testing, user research">
+
+        <!-- ========== FAVICON & APPLE ICONS ========== -->
+        <%= favicon_link_tag 'favicon.ico' %>
+        <link rel="apple-touch-icon" href="/frontend/images/apple-touch-icon.png">
+
+        <!-- ========== MINIFIED VENDOR CSS ========== -->
+        <link rel="stylesheet" href="/frontend/styles/vendor.css">
+        <link rel="stylesheet" href="/frontend/styles/main.css">
+
+        <!-- ========== MODERNIZR ========== -->
+        <script src="/frontend/scripts/vendor/modernizr.js"></script>
+        <%= tag :meta, name: "stripe-key", content: Rails.application.secrets.stripe_publishable_key %>
+        <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+
+        <%= javascript_include_tag 'application' %>
+
+        <%= render 'layouts/google_analytics' %>
+
+        <%= csrf_meta_tags %>
+        <%= yield(:head) %>
+
+    </head>
+
+    <!-- ========== BODY ==========
+    .light-header: for light colored header
+    .dark-header: for dark colored header
+    ==========  ========== -->
+    <body class="dark-header animsition">
+
+        <!-- ========== NAVIGATION ========== -->
+      <nav class="navbar yamm navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button> <!-- end navbar-toggle -->
+            <a class="navbar-brand" href="/">
+              <img src="/frontend/images/light-logo.png" alt="Logo" class="light-logo">
+              <img src="/frontend/images/dark-logo.png" alt="Logo" class="dark-logo">
+            </a> <!-- end navbar-brand -->
+          </div> <!-- end navbar-header -->
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav pull-right">
+
+                <% if user_signed_in? %>
+              <li>
+                  <%= link_to 'About Us', page_path('about') %>
+                </li>
+              <li><%= link_to 'TreeTool', dashboards_path %></li>
+              <li><%= link_to 'Edit account', edit_user_registration_path %></li>
+              
+                <li><%= link_to 'Sign out', destroy_user_session_path, :method=>'delete' %></li>
+            <% else %>
+                <li class="active dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Products <span class="caret"></span></a>
+                              <ul class="dropdown-menu animated fadeIn">
+                    <li>
+                                      <div class="yamm-content">
+                                          <div class="nav-col">
+                                              <ul>
+                                                  <li><a href="/pages/treetool">TreeTool</a></li>
+                                              </ul>
+                                          </div> <!-- end nav-col -->
+                                      </div> <!-- end yamm-content -->
+                    </li>
+                  </ul> <!-- end dropdown-menu -->
+                </li>
+                <li>
+                    <%= link_to 'About Us', page_path('about') %>
+                  </li>
+                <li>
+                    <%= link_to 'Pricing', page_path('pricing') %>
+                  </li>
+              <li><%= link_to 'Sign in', new_user_session_path %></li>
+              <li class="nav-btn-wrap">
+                            <span class="nav-btn"><a href="<%= new_user_registration_path %>" class="btn se-btn-black btn-rounded">Sign Up</a></span>
+                        </li>
+              <!-- <li><%= link_to 'Sign up', new_user_registration_path, data: { no_turbolink: true } %></li> -->
+            <% end %>
+
+            </ul> <!-- end navbar-nav -->
+
+          </div> <!--end nav-collapse -->
+        </div> <!-- end container -->
+      </nav>
+
+        <%= yield %>
+
+        <!-- ========== FOOTER ========== -->
+        <footer class="light-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2 col-sm-3 col-xs-6">
+                        <img src="/frontend/images/dark-logo.png" alt="" class="footer-logo">
+                    </div>
+
+                    <div class="col-md-2 col-sm-3 col-xs-6">
+                        <h6 class="mtn">General</h6>
+                        <ul>
+                            <li><a href="<%= new_user_registration_path %>">Sign Up</a></li>
+                            <li><a href="<%= new_user_session_path %>">Login</a></li>
+                            <li><a href="/pages/privacypolicy">Privacy Policy</a></li>
+                            <li><a href="/pages/termsconditions">Terms of Service</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-md-2 col-sm-3 col-xs-6">
+                        <h6 class="mtn">PAGES</h6>
+                        <ul>
+                            <li><a href="/pages/about">About Us</a></li>
+                            <li><a href="/pages/pricing">Pricing</a></li>
+                            <li><a href="/pages/treetool">TreeTool</a></li>
+                        </ul>
+                    </div>
+
+
+                    
+                    <div class="col-md-4 col-sm-8 col-sm-offset-2 col-md-offset-0">
+                        <h6 class="mtn">SUBSCRIBE</h6>
+                        <div class="input-group">
+                            <input type="email" class="form-control inp-rounded" placeholder="Enter your email id">
+                            <span class="input-group-btn">
+                                <button class="btn se-btn btn-rounded" type="button">Subscribe!</button>
+                            </span> <!-- end input-group-btn -->
+                        </div><!-- end input-group -->
+                        <p class="text-center text-muted">We don't spam!</p>
+                    </div>
+                    
+
+                </div> <!-- end row -->
+
+                <div class="row footer-bottom">
+                    <div class="col-md-6">
+                        <p>Copyright &copy; Optimal Suite. 2016. All Rights Reserved.</p>
+                    </div>
+
+                    <div class="col-md-6 text-right">
+                        <h6><a href="#">FACEBOOK</a></h6>
+                        <h6><a href="#">TWITTER</a></h6>
+                        <h6><a href="#">LINKEDIN</a></h6>
+                        <h6><a href="#">GOOGLE PLUS</a></h6>
+                    </div>
+                </div> <!-- end footer-bottom -->
+            </div> <!-- end container -->
+        </footer>
+
+
+      <script src="/frontend/scripts/vendor.js"></script>
+
+        <!-- ========== MINIFIED PLUGINS JS ========== -->
+      <script src="/frontend/scripts/plugins.js"></script>
+
+      <script src="/frontend/scripts/main.js"></script>
+    </body>
+
+</html>

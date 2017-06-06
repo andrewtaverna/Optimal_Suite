@@ -1,0 +1,129 @@
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+ 
+    <script src="/assets/chartkick.js"></script>
+    <%= javascript_include_tag "https://www.google.com/jsapi" %>
+	  <script>
+	  $(function() {
+	    $( "#tabs" ).tabs();
+	  });
+	  </script>
+
+
+
+<div class="container">
+
+	<h2>
+	  <%= @cardtool.title %>
+	</h2>
+	 
+	<h4>
+	  <%= @cardtool.description %>
+	</h4>
+
+<div id="tabs">
+  <ul>
+    <li><a href="#tabs-1">Campaign Information</a></li>
+    <li><a href="#tabs-2">Add Cards</a></li>
+    <li><a href="#tabs-3">Results</a></li>
+  </ul>
+  <div id="tabs-1">
+  <div class="container">
+
+		<div class="row">
+			<div class="col-md-8">
+				  <%= form_for :cardtool, url: cardtool_path(@cardtool), method: :patch do |f| %>
+		   
+				    <% if @cardtool.errors.any? %>
+				      <div id="error_explanation">
+				        <h2>
+				          <%= pluralize(@cardtool.errors.count, "error") %> prohibited
+				          this cardtool from being saved:
+				        </h2>
+				        <ul>
+				          <% @cardtool.errors.full_messages.each do |msg| %>
+				            <li><%= msg %></li>
+				          <% end %>
+				        </ul>
+				      </div>
+				    <% end %>
+
+				    <p>
+				      <%= f.label :title %><br>
+				      <%= f.text_field :title, class: "form-control" %>
+				    </p>
+				    <p>
+				      <%= f.label :description %><br>
+				      <%= f.text_area :description, class: "form-control input-lg" %>
+				    </p>
+				   
+				    <p>
+				      <%= f.submit "Edit Campaign", class: "btn btn-default" %>
+				    </p>
+				   
+				  <% end %>
+		  	</div>
+		</div>
+		
+		<hr>
+
+		<div class="row">
+			<div class="col-md-8">
+		  		<%= link_to 'Back to the Card Tools Dash', cardtools_path, style: "color:blue;" %>
+			</div>
+		</div>
+
+
+  	</div>
+
+  </div>
+
+
+
+
+
+  <div id="tabs-2">
+	  <div class="container">
+		<div class="row">
+			<div class="col-md-4 col-sm-8 col-xs-8">
+
+				<!-- Styles the list items, should be moved out of this file -->
+				<style>
+					.listCards {
+				    padding: 5px;
+				    border: 1px solid #999;
+				    background: #eee;
+				    margin: 5px;
+				    cursor: move;
+				    list-style:none;
+				}
+				</style>
+
+				<!-- Angular controller for cards -->
+				<div ng-app="ui" ng-controller="SortableCtrl">
+				    <ul id="sortable">
+				        <li class="listCards" ng-repeat="item in sortableArray" ng-bind="item"></li>
+				    </ul>
+				    
+				    <button ng-click="add()">Add</button>
+				    <hr>
+				    <pre ng-bind="sortableArray|json"></pre>
+				</div>
+
+
+
+			</div>
+		</div>
+	  </div>
+  </div>
+
+
+  <div id="tabs-3">
+  	  	<div class="container">
+
+
+		</div>
+  </div>
+</div>
+
+

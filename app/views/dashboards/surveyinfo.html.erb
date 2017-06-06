@@ -1,0 +1,44 @@
+          <% content_for :title do %>Survey Info<% end %>
+
+          <div class="">
+            <div class="page-title">
+              <div class="title_left" style="width:100%;">
+                <h3>Survey Information</h3>
+              </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2><%= @dashboard.title %></h2>
+
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+						<style>
+							p {
+								font-size: 16px;
+							}
+						</style>
+						<p>Once you share this link you will not be able to make changes to your survey.</p>
+						<p>Results will be accessible once the first user has taken the survey.</p>
+						<br>
+
+						<% @hashids = Hashids.new("im gonna make billions off this stuff") %>
+						<% @hash = @hashids.encode(@dashboard.id, @dashboard.id, @dashboard.id) %>
+
+						<p>Share this link for your survey: <input class="form-control" autocomplete="off" type="text" value="http://www.optimalsuite.com/survey/<%= @hash %>" size="25"></p>
+
+
+			  			<a class="btn btn-default" target="_blank" href="/survey/<%= @hash %>">Go to your survey!</a>
+				   		<br>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>

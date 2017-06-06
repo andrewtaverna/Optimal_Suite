@@ -1,0 +1,164 @@
+<% content_for :title do %>Dashboard - Optimal Suite<% end %>
+<div id="portfolio">
+
+  <div id="showcase">
+    <div class="container">
+      <div class="row header">
+        <div class="col-md-11">
+          <h3>Your Campaigns</h3>
+          <p>Tree Testing Tool for Information Architecture.</p>
+          <br>
+        </div>
+
+        <div class="col-md-1">
+          <a href="/dashboards/new" class="btn btn-primary" style="margin-top:20px;">Create New</a>
+        </div>
+
+        <% @numberOfActive = 0 %>
+        <% Dashboard.all.each do |dashboard| %> 
+          <% if can? :show, dashboard %>
+              <% @numberOfActive = @numberOfActive + 1 %>
+          <% end %>
+        <% end %>
+        </div>
+
+
+
+      <div class="row header" style="margin-top: -20px;">
+
+
+        <% if @numberOfActive == 0 %>
+          <div class="col-md-8">
+            <div class="project clearfix">
+              <h3>
+                Start Testing by Creating a New Campaign
+              </h3>
+              <p class="description" style="width:100%;">This is where your new campaigns will show up once you start testing with TreeTool. <br><br> Start by clicking "Create New" in the top right-hand corner!</p>
+            </div>
+          </div>
+        <% end %>
+
+        <% if @numberOfActive != 0 %>
+        <div class="col-md-8">
+
+        <% Dashboard.all.each do |dashboard| %> 
+        <% if can? :show, dashboard %>
+        
+          <div class="project clearfix">
+            <h3><%= dashboard.title %></h3>
+
+            <p class="description" style="float:left; width:70%;">
+              <%= dashboard.description %>
+
+            </p>
+            <div class="visit" style="float:right;">
+
+              <a href="<%= dashboard_path(id: dashboard.id) %>" class="btn btn-default"><em class="fa fa-pencil"></em></a>
+
+              <% if Result.where(dashboardid: dashboard.id).length > 0 %>
+              <a href="/surveyresults/<%= dashboard.id %>/overview" class="btn btn-primary"><em class="fa fa-lightbulb-o"></em></a>
+              <% end %>
+
+                      <%= link_to raw('<em class="fa fa-trash"></em>'), dashboard_path(action: :delete,id: dashboard.id),method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger" %>
+
+            </div>
+          </div>
+
+
+        <% end %>
+        <% end %>
+
+        </div>
+        <% end %>
+
+        <div class="col-md-4 description">
+        <style>
+          .description p {
+            width: 100% !important;
+          }
+        </style>
+            <div class="info">
+              <p>
+                <strong>Welcome to our TreeTool testing software.</strong>
+              </p>
+              <p>
+              Click
+                <strong>Create Campaign</strong>
+                , add a name and description.
+              </p>
+              <p>
+                <strong>Then,</strong>
+                Configure your campaign according to your specifications.
+              </p>
+              <p>
+                <strong>Finally,</strong>
+                Use the link provided to send your test out to users and collect data.
+              </p>
+              <p>
+                <strong>Results</strong>
+                are available after the first user signs up for the survey. At this point, no more changes can be made to the campaign.
+              </p>
+              
+            </div>              
+          </div>
+
+      </div>
+
+
+
+    </div>
+
+  </div>
+
+
+  <div id="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-3 copyright">
+          Optimal Suite 2016
+        </div>
+        <div class="col-sm-6 menu">
+          <ul>
+                <% if user_signed_in? %>
+                    <li>
+                        <%= link_to 'About Us', page_path('about') %>
+                      </li>
+                  <li><%= link_to 'TreeTool', dashboards_path %></li>
+                  <li><%= link_to 'Edit account', edit_user_registration_path %></li>
+                  
+                    <li><%= link_to 'Sign out', destroy_user_session_path, :method=>'delete' %></li>
+                <% else %>
+                    <li>
+                        <%= link_to 'About Us', page_path('about') %>
+                      </li>
+                    <li>
+                        <%= link_to 'Pricing', page_path('pricing') %>
+                      </li>
+                  <li><%= link_to 'Sign in', new_user_session_path %></li>
+                 <li><%= link_to 'Sign up', new_user_registration_path, data: { no_turbolink: true } %></li>
+
+                  <!-- <li><%= link_to 'Sign up', new_user_registration_path, data: { no_turbolink: true } %></li> -->
+                <% end %>
+              </ul>
+        </div>
+
+        <!--
+        <div class="col-sm-3 social">
+          <a href="#">
+            <img src="images/social/social-tw.png" alt="twitter" />
+          </a>
+          <a href="#">
+            <img src="images/social/social-dbl.png" alt="dribbble" />
+          </a>
+        </div>
+        -->
+      </div>
+    </div>
+</div>
+
+
+
+
+
+
+</div>

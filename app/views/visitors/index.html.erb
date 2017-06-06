@@ -1,0 +1,387 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+<meta name="verifyownership" content="f50bbf77930967a07aa7431737e73f28" />
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <!-- ========== VIEWPORT META ========== -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+        <!-- ========== PAGE TITLE ========== -->
+        <title><%= content_for?(:title) ? yield(:title) : "Optimal Suite" %></title>
+
+        <!-- ========== META TAGS ========== -->
+        <meta name="description" content="User Experience Testing Tools for Information Architecture.">
+        <meta name="keywords" content="tree testing, ux testing, user research">
+
+        <!-- ========== FAVICON & APPLE ICONS ========== -->
+        <%= favicon_link_tag 'favicon.ico' %>
+        <link rel="apple-touch-icon" href="/frontend/images/apple-touch-icon.png">
+
+        <!-- ========== MINIFIED VENDOR CSS ========== -->
+        <link rel="stylesheet" href="/frontend/styles/vendor.css">
+        <link rel="stylesheet" href="/frontend/styles/main.css">
+
+        <!-- ========== MODERNIZR ========== -->
+        <script src="/frontend/scripts/vendor/modernizr.js"></script>
+
+        <%= javascript_include_tag 'homepage' %>
+
+        <%= render 'layouts/google_analytics' %>
+
+        <%= csrf_meta_tags %>
+        <%= yield(:head) %>
+    
+    </head>
+
+    <!-- ========== BODY ==========
+    .light-header: for light colored header
+    .dark-header: for dark colored header
+    ==========  ========== -->
+    <body class="light-header animsition">
+
+        <!-- ========== NAVIGATION ========== -->
+    	<nav class="navbar yamm navbar-fixed-top" role="navigation">
+    		<div class="container-fluid">
+    			<div class="navbar-header">
+    				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+    					<span class="sr-only">Toggle navigation</span>
+    					<span class="icon-bar"></span>
+    					<span class="icon-bar"></span>
+    					<span class="icon-bar"></span>
+    				</button> <!-- end navbar-toggle -->
+    				<a class="navbar-brand" href="/">
+    					<img src="/frontend/images/light-logo.png" alt="Logo" class="light-logo">
+    					<img src="/frontend/images/dark-logo.png" alt="Logo" class="dark-logo">
+    				</a> <!-- end navbar-brand -->
+    			</div> <!-- end navbar-header -->
+
+    			<div id="navbar" class="navbar-collapse collapse">
+    				<ul class="nav navbar-nav pull-right">
+
+		      			<% if user_signed_in? %>
+	    				<li>
+	        				<%= link_to 'About Us', page_path('about') %>
+	        			</li>
+						  <li><%= link_to 'TreeTool', dashboards_path %></li>
+						  <li><%= link_to 'Edit account', edit_user_registration_path %></li>
+						  
+		  					<li><%= link_to 'Sign out', destroy_user_session_path, :method=>'delete' %></li>
+						<% else %>
+	    					<li class="active dropdown">
+	    						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Products <span class="caret"></span></a>
+	                            <ul class="dropdown-menu animated fadeIn">
+	    							<li>
+	                                    <div class="yamm-content">
+	                                        <div class="nav-col">
+	                                            <ul>
+	                                                <li><a href="/pages/treetool">TreeTool</a></li>
+	                                            </ul>
+	                                        </div> <!-- end nav-col -->
+	                                    </div> <!-- end yamm-content -->
+	    							</li>
+	    						</ul> <!-- end dropdown-menu -->
+	    					</li>
+		    				<li>
+		        				<%= link_to 'About Us', page_path('about') %>
+		        			</li>
+		    				<li>
+		        				<%= link_to 'Pricing', page_path('pricing') %>
+		        			</li>
+						  <li><%= link_to 'Sign in', new_user_session_path %></li>
+						  <li class="nav-btn-wrap">
+                            <span class="nav-btn"><a href="<%= new_user_registration_path %>" class="btn se-btn-black btn-rounded">Sign Up</a></span>
+                        </li>
+						  <!-- <li><%= link_to 'Sign up', new_user_registration_path, data: { no_turbolink: true } %></li> -->
+						<% end %>
+
+    				</ul> <!-- end navbar-nav -->
+
+    			</div> <!--end nav-collapse -->
+    		</div> <!-- end container -->
+    	</nav>
+
+        <!-- ========== HEADER ========== -->
+        <header class="header main-header parallax-bg" data-parallax="scroll" data-image-src="/frontend/images/bg-img-3.jpg" data-speed="0.4" >
+            <div class="primary-trans-bg">
+                <div class="container">
+                    <!-- For centering the content vertically -->
+                    <div class="outer">
+                        <div class="inner text-center">
+                            <h1 class="white-color">Test Your Information Architecture Today with TreeTool.</h1>
+                            <h5 class="">Learn why and how people get lost in your content or site.</h5>
+                            <a href="<%= new_user_registration_path %>" class="btn se-btn-white btn-rounded">Free 14 Days Trial</a>
+                        </div> <!-- end inner -->
+                    </div> <!-- end outer -->
+                </div> <!-- end container -->
+            </div> <!-- end primary-trans-bg -->
+        </header>
+
+        <!-- ========== OFFER SECTION ========== -->
+        <section class="se-section offer-section gray-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <p><span class="badge">FREE</span> EVERY plan offers a 14-day trial so that you can try before you buy. Cancel at any time. <a href="/pages/treetool" class="learn-more">Learn More</a></p>
+                    </div>
+                </div> <!-- end row -->
+            </div> <!-- end container -->
+        </section>
+
+        <!-- ========== FEATURES ========== -->
+        <section class="se-section features-section">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-3 col-sm-6 se-feature">
+                        <i class="icon ion-ios-analytics-outline"></i>
+                        <h5>TreeTool</h5>
+                        <p>Build out your site layout or content, share it with users, and get insightful feedback into whether they can find the items or services they need.</p>
+                    </div> <!-- end se-feature -->
+
+                    <div class="col-md-3 col-sm-6 se-feature">
+                        <i class="icon ion-ios-paper-outline"></i>
+                        <h5>Remote Testing Anywhere</h5>
+                        <p>Forget archaic methods of using pencil and paper to test information architecture and other usability aspects. TreeTool is accessible online 24/7 to user researchers and participants.</p>
+                    </div> <!-- end se-feature -->
+
+                    <div class="col-md-3 col-sm-6 se-feature">
+                        <i class="icon ion-ios-lightbulb-outline"></i>
+                        <h5>Unlimited Access</h5>
+                        <p>You get unlimited access to TreeTool on any of our plans. Create & Collect data with unlimited tests & participants for as long as you're subscribed.</p>
+                    </div> <!-- end se-feature -->
+
+                    <div class="col-md-3 col-sm-6 se-feature">
+                        <i class="icon ion-ios-speedometer-outline"></i>
+                        <h5>14-Day Free Trial</h5>
+                        <p>With our 14-day free trial, you can up and running in no time with no-risk! If you aren't 100% satisfied, you can cancel at any time.</p>
+                    </div> <!-- end se-feature -->
+
+                </div> <!-- end row -->
+            </div> <!-- end container -->
+        </section>
+
+        <!-- ========== SINGLE FEATURE SECTION ========== -->
+        <section class="se-section single-feature">
+
+            <div class="col-md-6 zero-padding col-md-push-6 side-img">
+                <img src="/images/tasks-home.png" alt="" class="img-responsive">
+            </div> <!-- end side-img -->
+
+            <div class="container feature-desc">
+                <div class="row">
+                    <div class="col-md-5 feature-info">
+                        <h2 style="width:80%;">Tree Testing Software</h2>
+                        <p>A tree test is a usability test on the skeleton of your navigation with the design removed. It allows you to isolate problems in findability in your taxonomy, groups or labels that are not attributable to issues with design distractions, or helpers.</p>
+
+                        <p>Tree testing is a usability technique for evaluating the findability of topics in a website. It is also known as reverse card sorting or card-based classification. A large website is typically organized into a hierarchy (a "tree") of topics and subtopics.</p>
+
+                        <a href="/pages/treetool" class="btn se-btn btn-rounded">Learn More</a>
+                    </div>
+
+                </div> <!-- end row -->
+            </div> <!-- end container -->
+
+        </section>
+
+        <!-- ========== SINGLE FEATURE SECTION ========== -->
+        <section class="se-section single-feature">
+
+            <div class="col-md-6 zero-padding side-img">
+                <img src="/images/results-home.png" alt="" class="img-responsive">
+            </div> <!-- end side-img -->
+
+            <div class="container feature-desc">
+                <div class="row">
+                    <div class="col-md-5 col-md-push-7 feature-info">
+                        <h2 style="width:80%;">How Do I Get Started?</h2>
+
+                          <!--                       This type of testing is quite simple. You’re going to ask people how they would do a particular task or look for particular information using your new IA.
+
+For example, if I wanted to test the IA of my conference website, I could ask people to find out some key things like how much it costs, what events are on particular days, and what they’ll get out of the conference. I’m not really asking them to find the answers, as the content won’t be available yet, but asking them where they would look for the information. I show them the IA step-by-step and ask them to indicate where they’d look – it’s that easy. -->
+
+                        <p>Ask users how they would do a particular task or look for particular information using your new information architecture</p>
+                        <p>For example, if I wanted to test the IA of a conference website, the survey could ask people to find out some key things like how much it costs, what events are on each day. The layout is shown step-by-step and asks them to indicate where they’d look – it’s that easy.</p>
+                        <p>Results are collected and analyzed to see if the layout works.</p>
+                        <a href="#" class="btn se-btn btn-rounded">Learn More</a>
+                    </div>
+                </div> <!-- end row -->
+            </div> <!-- end container -->
+        </section>
+
+        <!-- ========== STEPS ========== -->
+        <section class="se-section se-steps">
+            <div class="container">
+                <div class="row text-center">
+                    <h3 class="underline mtn">It's as easy as 1 - 2 - 3!</h3>
+                </div> <!-- end row -->
+
+                <div class="row">
+                    <div class="col-md-4 col-sm-4 one-step">
+                        <h4>Sign Up</h4>
+                        <p>Start an account with us on a monthly or yearly plan with our no-risk 14-day trial</p>
+                    </div>
+
+                    <div class="col-md-4 col-sm-4 one-step">
+                        <h4>Build Your Layout</h4>
+                        <p>Layout your site's information architecture, add tasks for users to complete, and further customize your test.</p>
+                    </div>
+
+                    <div class="col-md-4 col-sm-4 one-step">
+                        <h4>Share & Analyze</h4>
+                        <p>Share your survey built with TreeTool with users to collect data and insights that we generate for you so that you can prove an information architecture.</p>
+                    </div>
+                </div> <!-- end row -->
+            </div> <!-- end container -->
+        </section>
+
+        <!-- ========== FEATURES ========== -->
+        <section class="se-section features-section parallax-bg" data-parallax="scroll" data-image-src="/frontend/images/bg-img-3.jpg" data-speed="0.4">
+            <div class="black-gradient">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 se-feature-style-2 mb60">
+                            <div class="left">
+                                <i class="icon ion-arrow-expand"></i>
+                            </div>
+                            <div class="right">
+                                <h5>Remote Testing</h5>
+                                <p>Forget about the archaic method of using pencil and paper to test information architecture and other usability aspects. TreeTool is accessible online 24/7.</p>
+                            </div>
+                        </div> <!-- end se-feature -->
+
+                        <div class="col-md-6 col-sm-6 se-feature-style-2 mb60">
+                            <div class="left">
+                                <i class="icon ion-android-search"></i>
+                            </div>
+                            <div class="right">
+                                <h5>Test Once, Never Worry Again</h5>
+                                <p>Make sure users are getting lost on your site simply because they can't find the items they are looking for, run a quick test to ensure success with TreeTool.</p>
+                            </div>
+                        </div> <!-- end se-feature -->
+
+                        <div class="col-md-6 col-sm-6 se-feature-style-2 mb60">
+                            <div class="left">
+                                <i class="icon ion-ios-bolt"></i>
+                            </div>
+                            <div class="right">
+                                <h5>Observe & Collect Data</h5>
+                                <p>Our Tree Testing tool automatically generates pie charts, tables, and more data visually so results can be interpreted quickly.</p>
+                            </div>
+                        </div> <!-- end se-feature -->
+
+                        <div class="col-md-6 col-sm-6 se-feature-style-2 mb60">
+                            <div class="left">
+                                <i class="icon ion-information"></i>
+                            </div>
+                            <div class="right">
+                                <h5>Share Online</h5>
+                                <p>You can work with remote participants right out of the box by simply sending them your generated link.</p>
+                            </div>
+                        </div> <!-- end se-feature -->
+
+                        <div class="col-md-6 col-sm-6 se-feature-style-2">
+                            <div class="left">
+                                <i class="icon ion-checkmark"></i>
+                            </div>
+                            <div class="right">
+                                <h5>More Tools Coming</h5>
+                                <p>We're always working and developing more tools for UX professionals to succeed. TreeTool is just the beginning.</p>
+                            </div>
+                        </div> <!-- end se-feature -->
+
+                        <div class="col-md-6 col-sm-6 se-feature-style-2">
+                            <div class="left">
+                                <i class="icon ion-settings"></i>
+                            </div>
+                            <div class="right">
+                                <h5>14-Day Trial</h5>
+                                <p>With our 14-day free trial, you can up and running in no time with no-risk! If you aren't 100% satisfied, you can cancel at any time.</p>
+                            </div>
+                        </div> <!-- end se-feature -->
+
+                    </div> <!-- end row -->
+                </div> <!-- end container -->
+            </div> <!-- end black-gradient -->
+        </section> <!-- end features-section -->
+
+        <!-- ========== CTA SECTION ========== -->
+        <section class="se-section primary-bg">
+            <div class="container">
+                <div class="row text-center">
+                    <h3>Create Your Account Now!</h3>
+                    <p>Get your 14 day trial.</p>
+                    <a href="<%= new_user_registration_path %>" class="btn se-btn-black btn-rounded">SIGN UP</a>
+                </div> <!-- end row -->
+            </div> <!-- end container -->
+        </section>
+
+        <!-- ========== FOOTER ========== -->
+        <footer class="light-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2 col-sm-3 col-xs-6">
+                        <img src="/frontend/images/dark-logo.png" alt="" class="footer-logo">
+                    </div>
+
+                    <div class="col-md-2 col-sm-3 col-xs-6">
+                        <h6 class="mtn">General</h6>
+                        <ul>
+                            <li><a href="<%= new_user_registration_path %>">Sign Up</a></li>
+                            <li><a href="<%= new_user_session_path %>">Login</a></li>
+                            <li><a href="/pages/privacypolicy">Privacy Policy</a></li>
+                            <li><a href="/pages/termsconditions">Terms of Service</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-md-2 col-sm-3 col-xs-6">
+                        <h6 class="mtn">PAGES</h6>
+                        <ul>
+                            <li><a href="/pages/about">About Us</a></li>
+                            <li><a href="/pages/pricing">Pricing</a></li>
+                            <li><a href="/pages/treetool">TreeTool</a></li>
+                        </ul>
+                    </div>
+
+
+                    
+                    <div class="col-md-4 col-sm-8 col-sm-offset-2 col-md-offset-0">
+                        <h6 class="mtn">SUBSCRIBE</h6>
+                        <div class="input-group">
+                            <input type="email" class="form-control inp-rounded" placeholder="Enter your email id">
+                            <span class="input-group-btn">
+                                <button class="btn se-btn btn-rounded" type="button">Subscribe!</button>
+                            </span> <!-- end input-group-btn -->
+                        </div><!-- end input-group -->
+                        <p class="text-center text-muted">We don't spam!</p>
+                    </div>
+                    
+
+                </div> <!-- end row -->
+
+                <div class="row footer-bottom">
+                    <div class="col-md-6">
+                        <p>Copyright &copy; Optimal Suite. 2016. All Rights Reserved.</p>
+                    </div>
+
+                    <div class="col-md-6 text-right">
+                        <h6><a href="#">FACEBOOK</a></h6>
+                        <h6><a href="#">TWITTER</a></h6>
+                        <h6><a href="#">LINKEDIN</a></h6>
+                        <h6><a href="#">GOOGLE PLUS</a></h6>
+                    </div>
+                </div> <!-- end footer-bottom -->
+            </div> <!-- end container -->
+        </footer>
+
+
+    	<script src="/frontend/scripts/vendor.js"></script>
+
+        <!-- ========== MINIFIED PLUGINS JS ========== -->
+    	<script src="/frontend/scripts/plugins.js"></script>
+
+    	<script src="/frontend/scripts/main.js"></script>
+    </body>
+
+</html>

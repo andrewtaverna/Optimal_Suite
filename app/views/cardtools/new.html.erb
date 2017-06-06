@@ -1,0 +1,19 @@
+<div class="container">
+	<%= form_for @cardtool, :url => cardtools_path do |f| %>  
+	  <div class="field"> 
+
+	    <%= f.label :cardtool %><br> 
+        <p>
+	      Campaign Name: <br>
+	      <%= f.text_field :title %>
+	    </p>
+        <p>
+	      Description: <br>
+	      <%= f.text_field :description %>
+	    </p>
+	  </div> 
+	  <div class="actions"> 
+	    <%= f.submit "Create" %> 
+	  </div> 
+	<% end %>
+</div>

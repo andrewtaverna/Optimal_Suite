@@ -1,0 +1,43 @@
+<% content_for :title do %>Results - <%= @dashboard.title %><% end %>
+<%= javascript_include_tag "//www.google.com/jsapi" %> 
+<%= javascript_include_tag "application", "chartkick" %>
+
+
+          <div class="">
+            <div class="page-title">
+              <div class="title_left" style="width:100%;">
+                <h3>Results - Overview</h3>
+              </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2><%= @dashboard.title %></h2>
+
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+						<style>
+							p {
+								font-size: 16px;
+							}
+						</style>
+						
+						<p>This survey was created on <%= @dashboard.created_at %>.</p>
+						<p>Average time spent on the survey: <%= @timeForTasks.round(3) %> seconds.</p>
+						<p>Number of Participants Involved: <%= @numberOfParticipants %></p>
+
+						<br>
+
+						<%= pie_chart({"Correct" => @correctPerQuestion.inject(0){|sum,x| sum + x }, "Wrong" => @wrongPerQuestion.inject(0){|sum,x| sum + x }}, library: {backgroundColor: "#fcfcfc", title: "Overall Success Distribution", is3D: "true", chartArea: {width: "100%", height: "100%"} }) %>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>

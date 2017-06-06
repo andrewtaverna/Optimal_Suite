@@ -1,0 +1,282 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <!-- ========== VIEWPORT META ========== -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+        <!-- ========== PAGE TITLE ========== -->
+        <title><%= content_for?(:title) ? yield(:title) : "User Experience Testing" %></title>
+
+        <!-- ========== META TAGS ========== -->
+        <meta name="description" content="User Experience Testing Tools for Information Architecture.">
+        <meta name="keywords" content="tree testing, ux testing, user research">
+
+        <!-- ========== FAVICON & APPLE ICONS ========== -->
+        <%= favicon_link_tag 'favicon.ico' %>
+        <link rel="apple-touch-icon" href="/frontend/images/apple-touch-icon.png">
+
+        <!-- ========== MINIFIED VENDOR CSS ========== -->
+        <link rel="stylesheet" href="/frontend/styles/vendor.css">
+        <link rel="stylesheet" href="/frontend/styles/main.css">
+
+        <!-- ========== MODERNIZR ========== -->
+        <script src="/frontend/scripts/vendor/modernizr.js"></script>
+
+        <%= tag :meta, name: "stripe-key", content: Rails.application.secrets.stripe_publishable_key %>
+        <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+
+        <%= javascript_include_tag 'application' %>
+
+        <%= render 'layouts/google_analytics' %>
+
+        <%= csrf_meta_tags %>
+        <%= yield(:head) %>
+
+    </head>
+
+    <!-- ========== BODY ==========
+    .light-header: for light colored header
+    .dark-header: for dark colored header
+    ==========  ========== -->
+    <body class="dark-header animsition">
+
+        <!-- ========== NAVIGATION ========== -->
+      <nav class="navbar yamm navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button> <!-- end navbar-toggle -->
+            <a class="navbar-brand" href="/">
+              <img src="/frontend/images/light-logo.png" alt="Logo" class="light-logo">
+              <img src="/frontend/images/dark-logo.png" alt="Logo" class="dark-logo">
+            </a> <!-- end navbar-brand -->
+          </div> <!-- end navbar-header -->
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav pull-right">
+
+                <% if user_signed_in? %>
+              <li>
+                  <%= link_to 'About Us', page_path('about') %>
+                </li>
+              <li><%= link_to 'TreeTool', dashboards_path %></li>
+              <li><%= link_to 'Edit account', edit_user_registration_path %></li>
+              
+                <li><%= link_to 'Sign out', destroy_user_session_path, :method=>'delete' %></li>
+            <% else %>
+                <li class="active dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Products <span class="caret"></span></a>
+                              <ul class="dropdown-menu animated fadeIn">
+                    <li>
+                                      <div class="yamm-content">
+                                          <div class="nav-col">
+                                              <ul>
+                                                  <li><a href="/pages/treetool">TreeTool</a></li>
+                                              </ul>
+                                          </div> <!-- end nav-col -->
+                                      </div> <!-- end yamm-content -->
+                    </li>
+                  </ul> <!-- end dropdown-menu -->
+                </li>
+                <li>
+                    <%= link_to 'About Us', page_path('about') %>
+                  </li>
+                <li>
+                    <%= link_to 'Pricing', page_path('pricing') %>
+                  </li>
+              <li><%= link_to 'Sign in', new_user_session_path %></li>
+              <li class="nav-btn-wrap">
+                            <span class="nav-btn"><a href="<%= new_user_registration_path %>" class="btn se-btn-black btn-rounded">Sign Up</a></span>
+                        </li>
+              <!-- <li><%= link_to 'Sign up', new_user_registration_path, data: { no_turbolink: true } %></li> -->
+            <% end %>
+
+            </ul> <!-- end navbar-nav -->
+
+          </div> <!--end nav-collapse -->
+        </div> <!-- end container -->
+      </nav>
+
+        <!-- ========== PAGE TITLE ========== -->
+        <header class="header page-title" >
+            <div class="container">
+                <!-- For centering the content vertically -->
+                <div class="outer">
+                    <div class="inner text-center">
+
+                        <h1 class="">Account</h1>
+                        <h5 class="">Change your account settings here.</h5>
+
+                    </div> <!-- end inner -->
+                </div> <!-- end outer -->
+            </div> <!-- end container -->
+        </header>
+
+        <!-- ========== CONTACT US FORM ========== -->
+        <section class="se-section">
+            <div class="container">
+                <div class="row">
+
+                  <div class="col-sm-6">
+                    <h2>Edit <%= resource_name.to_s.humanize %></h2>
+
+                    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+                      <%= devise_error_messages! %>
+
+                      <div class="field">
+                        <%= f.label :email %><br />
+                        <%= f.email_field :email, autofocus: true %>
+                      </div>
+
+                      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+                        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+                      <% end %>
+
+                      <div class="field">
+                        <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+                        <%= f.password_field :password, autocomplete: "off" %>
+                      </div>
+
+                      <div class="field">
+                        <%= f.label :password_confirmation %><br />
+                        <%= f.password_field :password_confirmation, autocomplete: "off" %>
+                      </div>
+
+                      <div class="field">
+                        <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+                        <%= f.password_field :current_password, autocomplete: "off" %>
+                      </div>
+
+                      <div class="actions">
+                        <%= f.submit "Update" %>
+                      </div>
+                    <% end %>
+
+                    <% if !current_user.subscribed? %>
+                      <%= link_to("Upgrade from Free Trial", new_subscription_path) %>
+                    <% end %>
+
+                    <% if current_user.subscribed? %>
+                      <h3>Update Card</h3>
+
+                      <p>Your current card on file is:</p>
+                      <div><%= current_user.card_type %> **** **** **** <%= current_user.card_last4 %></div>
+                      <div>Expires <%= current_user.card_exp_month %> / <%= current_user.card_exp_year %></div>
+
+                      <hr />
+
+                      <%= form_tag card_path, method: :put, id: "payment-form" do %>
+                        <span class="payment-errors"></span>
+
+                        <div class="form-row">
+                          <label>
+                            <span>Card Number</span>
+                            <input value="" type="text" size="20" data-stripe="number"/>
+                          </label>
+                        </div>
+
+                        <div class="form-row">
+                          <label>
+                            <span>CVC</span>
+                            <input value="" type="text" size="4" data-stripe="cvc"/>
+                          </label>
+                        </div>
+
+                        <div class="form-row">
+                          <label>
+                            <span>Expiration (MM/YYYY)</span>
+                            <input value="" type="text" size="2" data-stripe="exp-month"/>
+                          </label>
+                          <span> / </span>
+                          <input value="" type="text" size="4" data-stripe="exp-year"/>
+                        </div>
+
+                        <button type="submit">Update Card</button>
+                      <% end %>
+
+                      <h3>Cancel my account</h3>
+
+                      <p>Unhappy? <%= button_to "Cancel my account", subscription_path, data: { confirm: "Are you sure?" }, method: :delete %></p>
+                    <% end %>
+                  </div>
+
+                </div> <!-- end row -->
+            </div> <!-- end container -->
+        </section>
+
+        <!-- ========== FOOTER ========== -->
+        <footer class="light-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2 col-sm-3 col-xs-6">
+                        <img src="/frontend/images/dark-logo.png" alt="" class="footer-logo">
+                    </div>
+
+                    <div class="col-md-2 col-sm-3 col-xs-6">
+                        <h6 class="mtn">General</h6>
+                        <ul>
+                            <li><a href="<%= new_user_registration_path %>">Sign Up</a></li>
+                            <li><a href="<%= new_user_session_path %>">Login</a></li>
+                            <li><a href="/pages/privacypolicy">Privacy Policy</a></li>
+                            <li><a href="/pages/termsconditions">Terms of Service</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-md-2 col-sm-3 col-xs-6">
+                        <h6 class="mtn">PAGES</h6>
+                        <ul>
+                            <li><a href="/pages/about">About Us</a></li>
+                            <li><a href="/pages/pricing">Pricing</a></li>
+                            <li><a href="/pages/treetool">TreeTool</a></li>
+                        </ul>
+                    </div>
+
+
+                    
+                    <div class="col-md-4 col-sm-8 col-sm-offset-2 col-md-offset-0">
+                        <h6 class="mtn">SUBSCRIBE</h6>
+                        <div class="input-group">
+                            <input type="email" class="form-control inp-rounded" placeholder="Enter your email id">
+                            <span class="input-group-btn">
+                                <button class="btn se-btn btn-rounded" type="button">Subscribe!</button>
+                            </span> <!-- end input-group-btn -->
+                        </div><!-- end input-group -->
+                        <p class="text-center text-muted">We don't spam!</p>
+                    </div>
+                    
+
+                </div> <!-- end row -->
+
+                <div class="row footer-bottom">
+                    <div class="col-md-6">
+                        <p>Copyright &copy; Optimal Suite. 2016. All Rights Reserved.</p>
+                    </div>
+
+                    <div class="col-md-6 text-right">
+                        <h6><a href="#">FACEBOOK</a></h6>
+                        <h6><a href="#">TWITTER</a></h6>
+                        <h6><a href="#">LINKEDIN</a></h6>
+                        <h6><a href="#">GOOGLE PLUS</a></h6>
+                    </div>
+                </div> <!-- end footer-bottom -->
+            </div> <!-- end container -->
+        </footer>
+
+
+      <script src="/frontend/scripts/vendor.js"></script>
+
+        <!-- ========== MINIFIED PLUGINS JS ========== -->
+      <script src="/frontend/scripts/plugins.js"></script>
+
+      <script src="/frontend/scripts/main.js"></script>
+    </body>
+
+</html>
